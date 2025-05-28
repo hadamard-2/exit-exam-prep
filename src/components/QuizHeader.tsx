@@ -13,9 +13,6 @@ export const QuizHeader: React.FC<QuizHeaderProps> = ({
 
     return (
         <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-slate-100 mb-8">
-                Computer Science Quiz
-            </h1>
             <div className="text-slate-400">
                 Question {currentQuestion + 1} of {totalQuestions}
             </div>

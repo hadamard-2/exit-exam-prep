@@ -17,8 +17,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     onAnswerSelect,
 }) => {
     return (
-        <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 shadow-2xl mb-8">
-            <div className="text-xl font-semibold text-slate-100 mb-8 leading-relaxed">
+        <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 shadow-2xl">
+            <div className="text-lg font-semibold text-slate-100 mb-8 leading-relaxed">
                 <MarkdownRenderer text={question.question} />
             </div>
 
@@ -49,7 +49,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                             >
                                 <div className="flex items-center gap-3">
                                     <div
-                                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                                        className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
                                             isSelected && showResult
                                                 ? isCorrect
                                                     ? "border-emerald-500 bg-emerald-500"
@@ -62,12 +62,12 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                         {isSelected &&
                                             showResult &&
                                             (isCorrect ? (
-                                                <Check className="h-4 w-4 text-white" />
+                                                <Check className="h-3 w-3 text-white" />
                                             ) : (
-                                                <X className="h-4 w-4 text-white" />
+                                                <X className="h-3 w-3 text-white" />
                                             ))}
                                     </div>
-                                    <span className="font-medium">
+                                    <span className="font-medium text-sm">
                                         <MarkdownRenderer text={choice.text} applyMargin={false}/>
                                     </span>
                                 </div>
