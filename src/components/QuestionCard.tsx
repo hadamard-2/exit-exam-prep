@@ -26,7 +26,6 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 {question.choices.map((choice, index) => {
                     const isSelected = selectedAnswer === index;
                     const isCorrect = choice.correct;
-                    const showResult = showExplanation && isSelected;
 
                     return (
                         <div key={index} className="space-y-3">
@@ -34,13 +33,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                 onClick={() => onAnswerSelect(index)}
                                 disabled={showExplanation}
                                 className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${
-                                    isSelected && showResult
+                                    showExplanation
                                         ? isCorrect
                                             ? "border-emerald-500 bg-emerald-500/10 text-emerald-100"
-                                            : "border-red-500 bg-red-500/10 text-red-100"
+                                            : isSelected
+                                            ? "border-red-500 bg-red-500/10 text-red-100"
+                                            : "border-slate-600 bg-slate-800/50"
                                         : isSelected
                                         ? "border-emerald-500 bg-emerald-500/5"
-                                        : "border-slate-600 bg-slate-800 hover:border-slate-500"
+                                        : "border-slate-600 bg-slate-800/50 hover:border-slate-600"
                                 } ${
                                     showExplanation
                                         ? "cursor-default"
@@ -50,22 +51,23 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                 <div className="flex items-center gap-3">
                                     <div
                                         className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                                            isSelected && showResult
+                                            showExplanation
                                                 ? isCorrect
                                                     ? "border-emerald-500 bg-emerald-500"
-                                                    : "border-red-500 bg-red-500"
+                                                    : isSelected
+                                                    ? "border-red-500 bg-red-500"
+                                                    : "border-slate-500"
                                                 : isSelected
                                                 ? "border-emerald-500 bg-emerald-500"
                                                 : "border-slate-500"
                                         }`}
                                     >
-                                        {isSelected &&
-                                            showResult &&
-                                            (isCorrect ? (
-                                                <Check className="h-3 w-3 text-white" />
-                                            ) : (
-                                                <X className="h-3 w-3 text-white" />
-                                            ))}
+                                        {showExplanation && isCorrect && (
+                                            <Check className="h-3 w-3 text-white" />
+                                        )}
+                                        {showExplanation && isSelected && !isCorrect && (
+                                            <X className="h-3 w-3 text-white" />
+                                        )}
                                     </div>
                                     <span className="font-medium text-sm">
                                         <MarkdownRenderer text={choice.text} applyMargin={false}/>
@@ -73,16 +75,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                 </div>
                             </button>
 
-                            {showExplanation && isSelected && (
+                            {showExplanation && choice.explanation && (
                                 <div
                                     className={`ml-6 p-4 border-l-4 ${
                                         isCorrect
                                             ? "border-emerald-500 bg-emerald-500/5 text-emerald-100"
-                                            : "border-red-500 bg-red-500/5 text-red-100"
+                                            : isSelected
+                                            ? "border-red-500 bg-red-500/5 text-red-100"
+                                            : "border-slate-500 bg-slate-500/5 text-slate-300"
                                     }`}
                                 >
                                     <div className="text-sm font-medium mb-1">
-                                        {isCorrect ? "Correct!" : "Incorrect"}
+                                        {isCorrect ? "Correct!" : isSelected ? "Incorrect" : "Info"}
                                     </div>
                                     <div className="text-sm opacity-90">
                                         <MarkdownRenderer

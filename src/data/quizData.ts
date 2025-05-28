@@ -30,7 +30,7 @@ export const quizData: QuizData = {
         {
             id: 2,
             question:
-                "In C++, what is the time complexity of inserting an element at the beginning of a `std::vector`?",
+                "In C++, what is the time complexity of inserting an element at the beginning of a std::vector?",
             choices: [
                 {
                     text: "O(1)",

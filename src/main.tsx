@@ -2,10 +2,12 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 // import App from './App.tsx'
-import QuizApp from "./QuizApp.tsx";
+// import QuizMode from "./QuizMode.tsx";
+import ReviewMode from "./ReviewMode";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <QuizApp />
+        {/* <QuizMode /> */}
+        <ReviewMode />
     </StrictMode>
 );
