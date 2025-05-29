@@ -61,7 +61,7 @@ export const ChatPanel = ({ messages, onSendMessage }: ChatPanelProps) => {
                         <div
                             className={`max-w-[75%] p-3 rounded-lg text-sm whitespace-pre-wrap ${
                                 message.sender === "user"
-                                    ? "bg-purple-600 text-white"
+                                    ? "bg-blue-600 text-white"
                                     : "bg-slate-800 text-slate-200"
                             }`}
                         >
@@ -80,13 +80,13 @@ export const ChatPanel = ({ messages, onSendMessage }: ChatPanelProps) => {
                         onChange={(e) => setInputMessage(e.target.value)}
                         onKeyDown={handleKeyPress}
                         placeholder="Ask about this question..."
-                        className="flex-1 bg-slate-800 border-0 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 resize-none min-h-[40px] max-h-[200px] overflow-y-auto"
+                        className="flex-1 bg-slate-800 border-0 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none min-h-[40px] max-h-[200px] overflow-y-auto"
                         rows={1}
                     />
                     <button
                         onClick={handleSendMessage}
                         disabled={!inputMessage.trim()}
-                        className="bg-purple-600 hover:bg-purple-700 disabled:bg-slate-800 p-2.5 rounded-lg transition-colors flex-shrink-0"
+                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-800 p-2.5 rounded-lg transition-colors flex-shrink-0"
                     >
                         <Send className="h-5 w-5" />
                     </button>
