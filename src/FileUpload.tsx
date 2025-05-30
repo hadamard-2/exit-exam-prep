@@ -51,6 +51,7 @@ export default function FileUpload() {
             return (
                 question.id &&
                 question.question &&
+                typeof question.correct_answer === "number" &&
                 question.choices &&
                 Array.isArray(question.choices) &&
                 question.choices.every((choice: unknown) => {
@@ -59,7 +60,6 @@ export default function FileUpload() {
                     return (
                         c.id !== undefined && // Check for choice id
                         typeof c.text === "string" &&
-                        typeof c.correct === "boolean" &&
                         typeof c.explanation === "string"
                     );
                 }) &&

@@ -32,7 +32,7 @@ export const useQuiz = (questions: Question[]) => {
             const selectedIndex = state.selectedAnswers[question.id];
             if (
                 selectedIndex !== undefined &&
-                question.choices[selectedIndex].correct
+                question.choices[selectedIndex].id === question.correct_answer
             ) {
                 correctAnswers++;
             }

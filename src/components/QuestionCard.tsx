@@ -25,7 +25,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             <div className="space-y-4">
                 {question.choices.map((choice, index) => {
                     const isSelected = selectedAnswer === index;
-                    const isCorrect = choice.correct;
+                    const isCorrect = question.correct_answer === choice.id;
 
                     return (
                         <div key={index} className="space-y-3">

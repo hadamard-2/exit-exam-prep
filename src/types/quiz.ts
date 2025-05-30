@@ -1,12 +1,14 @@
 export interface Choice {
+    id: number;
     text: string;
-    correct: boolean;
     explanation: string;
 }
 
 export interface Question {
     id: number;
     question: string;
+    user_answer?: number;
+    correct_answer: number;
     choices: Choice[];
 }
 

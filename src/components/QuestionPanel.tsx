@@ -16,9 +16,9 @@ export const QuestionPanel = ({
         <div className="w-1/2 border-r border-slate-800 flex flex-col">
             {/* Header */}
             <div className="h-16 pl-6 border-b border-slate-800 flex items-center">
-                <div className="text-sm text-slate-400">
-                    {currentQuestion + 1} / {totalQuestions}
-                </div>
+                <span className="text-sm text-slate-400">
+                    {currentQuestion + 1} of {totalQuestions}
+                </span>
             </div>
 
             {/* Content */}
@@ -26,7 +26,7 @@ export const QuestionPanel = ({
                 <QuestionCard
                     question={questionData}
                     selectedAnswer={questionData.choices.findIndex(
-                        (choice) => choice.correct
+                        (choice) => questionData.correct_answer == choice.id
                     )}
                     showExplanation={true}
                     onAnswerSelect={() => {}}
