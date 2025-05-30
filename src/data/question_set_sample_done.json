@@ -3,6 +3,7 @@
         {
             "id": 1,
             "question": "What will this Python code output?\n```python\nfor i in range(3):\n    print(i * 2)\n```",
+            "user_answer": 2,
             "choices": [
                 {
                     "id": 1,
@@ -27,6 +28,7 @@
         {
             "id": 2,
             "question": "In C++, what is the time complexity of inserting an element at the beginning of a std::vector?",
+            "user_answer": 1,
             "choices": [
                 {
                     "id": 1,
@@ -51,6 +53,7 @@
         {
             "id": 3,
             "question": "What will this JavaScript code log to the console?\n```javascript\nlet arr = [1, 2, 3];\narr.push(arr.length);\nconsole.log(arr);\n```",
+            "user_answer": 3,
             "choices": [
                 {
                     "id": 1,
@@ -75,6 +78,7 @@
         {
             "id": 4,
             "question": "Which sorting algorithm has the best average-case time complexity?",
+            "user_answer": 2,
             "choices": [
                 {
                     "id": 1,
@@ -99,6 +103,7 @@
         {
             "id": 5,
             "question": "What will this Java code output?\n```java\nString s1 = \"Hello\";\nString s2 = \"Hello\";\nString s3 = new String(\"Hello\");\nSystem.out.println(s1 == s2);\nSystem.out.println(s1 == s3);\n```",
+            "user_answer": 1,
             "choices": [
                 {
                     "id": 1,

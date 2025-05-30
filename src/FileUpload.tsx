@@ -86,7 +86,13 @@ export default function FileUpload() {
                 );
             }
 
-            // onFileUpload(data.questions);
+            localStorage.setItem("quizData", JSON.stringify(data));
+
+            if (mode === "quiz") {
+                navigate("/quiz");
+            } else if (mode === "review") {
+                navigate("/review");
+            }
         } catch (err) {
             setError(
                 err instanceof Error ? err.message : "Error processing file"
