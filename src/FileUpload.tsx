@@ -86,6 +86,9 @@ export default function FileUpload() {
                 );
             }
 
+            // Store original filename (without extension) for later use
+            const originalFilename = file.name.replace(/\.json$/i, "");
+            localStorage.setItem("originalFilename", originalFilename);
             localStorage.setItem("quizData", JSON.stringify(data));
 
             if (mode === "quiz") {

@@ -26,7 +26,7 @@ export const QuestionPanel = ({
                 <QuestionCard
                     question={questionData}
                     selectedAnswer={questionData.choices.findIndex(
-                        (choice) => questionData.correct_answer == choice.id
+                        (choice) => questionData.user_answer === choice.id
                     )}
                     showExplanation={true}
                     onAnswerSelect={() => {}}
