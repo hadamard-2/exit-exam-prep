@@ -87,7 +87,6 @@ const QuizMode = () => {
             <QuizResults
                 score={quiz.score}
                 totalQuestions={questions.length}
-                onRestart={quiz.resetQuiz}
             />
         );
     }

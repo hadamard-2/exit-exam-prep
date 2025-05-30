@@ -39,8 +39,20 @@ export const useChat = () => {
         }, 1000);
     };
 
+    const clearMessages = () => {
+        setChatMessages([
+            {
+                id: "1",
+                sender: "ai",
+                message: "Ask me anything about this question!",
+                timestamp: new Date(),
+            },
+        ]);
+    };
+
     return {
         messages: chatMessages,
         sendMessage,
+        clearMessages,
     };
 };

@@ -21,7 +21,7 @@ function ModeCard({
 }: ModeCardProps) {
     return (
         <Link to={to}>
-            <div className="bg-slate-900 border-1 border-slate-700 rounded-lg p-8 cursor-pointer hover:border-slate-600 transition-all duration-200 group h-full">
+            <div className="bg-slate-900 border-1 border-slate-700 rounded-lg p-8 cursor-pointer group h-full">
                 <div className="text-center">
                     <div
                         className={`w-16 h-16 ${bgColor} rounded-full flex items-center justify-center mx-auto mb-4 transition-colors`}

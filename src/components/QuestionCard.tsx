@@ -18,7 +18,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 }) => {
     return (
         <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 shadow-2xl">
-            <div className="text-lg font-semibold text-slate-100 mb-8 leading-relaxed">
+            <div className="text-[17px] font-semibold text-slate-100 mb-8 leading-relaxed">
                 <MarkdownRenderer text={question.question} />
             </div>
 

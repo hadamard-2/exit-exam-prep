@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, Copy, Trash2, Check } from "lucide-react";
 
 interface ChatMessage {
     id: string;
@@ -11,10 +11,12 @@ interface ChatMessage {
 interface ChatPanelProps {
     messages: ChatMessage[];
     onSendMessage: (message: string) => void;
+    onClearChat: () => void;
 }
 
-export const ChatPanel = ({ messages, onSendMessage }: ChatPanelProps) => {
+export const ChatPanel = ({ messages, onSendMessage, onClearChat }: ChatPanelProps) => {
     const [inputMessage, setInputMessage] = useState("");
+    const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const handleSendMessage = () => {
@@ -31,6 +33,16 @@ export const ChatPanel = ({ messages, onSendMessage }: ChatPanelProps) => {
         }
     };
 
+    const handleCopyMessage = async (message: string, messageId: string) => {
+        try {
+            await navigator.clipboard.writeText(message);
+            setCopiedMessageId(messageId);
+            setTimeout(() => setCopiedMessageId(null), 2000);
+        } catch (err) {
+            console.error("Failed to copy message:", err);
+        }
+    };
+
     // Auto-resize textarea based on content
     useEffect(() => {
         if (textareaRef.current) {
@@ -42,9 +54,20 @@ export const ChatPanel = ({ messages, onSendMessage }: ChatPanelProps) => {
     return (
         <div className="w-1/2 flex flex-col">
             {/* Header */}
-            <div className="h-16 pl-6 border-b border-slate-800 flex items-center gap-2">
-                <MessageCircle className="h-5 w-5 text-slate-400" />
-                <span className="text-slate-300">Discussion</span>
+            <div className="h-16 pl-6 pr-4 border-b border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <MessageCircle className="h-5 w-5 text-slate-400" />
+                    <span className="text-slate-300">Discussion</span>
+                </div>
+                {messages.length > 0 && (
+                    <button
+                        onClick={onClearChat}
+                        className="text-slate-400 hover:text-red-400 p-2 rounded-lg hover:bg-slate-800 transition-colors"
+                        title="Clear chat"
+                    >
+                        <Trash2 className="h-4 w-4" />
+                    </button>
+                )}
             </div>
 
             {/* Messages */}
@@ -52,21 +75,36 @@ export const ChatPanel = ({ messages, onSendMessage }: ChatPanelProps) => {
                 {messages.map((message) => (
                     <div
                         key={message.id}
-                        className={`flex ${
+                        className={`flex items-start gap-2 group ${
                             message.sender === "user"
                                 ? "justify-end"
                                 : "justify-start"
                         }`}
                     >
                         <div
-                            className={`max-w-[75%] p-3 rounded-lg text-sm whitespace-pre-wrap ${
+                            className={`max-w-[75%] p-3 rounded-lg text-sm ${
                                 message.sender === "user"
                                     ? "bg-blue-600 text-white"
                                     : "bg-slate-800 text-slate-200"
                             }`}
                         >
-                            {message.message}
+                            <div className="whitespace-pre-wrap">{message.message}</div>
                         </div>
+                        
+                        {/* Copy button */}
+                        {message.sender === "ai" && (
+                            <button
+                                onClick={() => handleCopyMessage(message.message, message.id)}
+                                className="p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity bg-slate-700 hover:bg-slate-600 flex-shrink-0 mt-1"
+                                title="Copy message"
+                            >
+                                {copiedMessageId === message.id ? (
+                                    <Check className="h-3 w-3 text-green-400" />
+                                ) : (
+                                    <Copy className="h-3 w-3 text-slate-300" />
+                                )}
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>

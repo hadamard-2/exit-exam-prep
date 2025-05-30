@@ -1,18 +1,18 @@
 import React from "react";
-import { Play } from "lucide-react";
+import { Home } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface QuizResultsProps {
     score: number;
     totalQuestions: number;
-    onRestart: () => void;
 }
 
 export const QuizResults: React.FC<QuizResultsProps> = ({
     score,
     totalQuestions,
-    onRestart,
 }) => {
     const percentage = Math.round((score / totalQuestions) * 100);
+    const navigate = useNavigate();
 
     const getMessage = () => {
         if (percentage >= 80) return "Excellent work! 🎉";
@@ -38,11 +38,11 @@ export const QuizResults: React.FC<QuizResultsProps> = ({
                             {getMessage()}
                         </div>
                         <button
-                            onClick={onRestart}
+                            onClick={() => navigate("/")}
                             className="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center gap-2 mx-auto"
                         >
-                            <Play className="h-5 w-5" />
-                            Take Quiz Again
+                            <Home className="h-5 w-5" />
+                            Go Home
                         </button>
                     </div>
                 </div>

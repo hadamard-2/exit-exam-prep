@@ -10,7 +10,7 @@ const ReviewMode = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const { messages, sendMessage } = useChat();
+    const { messages, sendMessage, clearMessages } = useChat();
 
     useEffect(() => {
         try {
@@ -52,6 +52,11 @@ const ReviewMode = () => {
         if (!isFirstQuestion) {
             setCurrentQuestion((prev) => prev - 1);
         }
+    };
+
+    const handleStartOver = () => {
+        setCurrentQuestion(0);
+        clearMessages();
     };
 
     useKeyboardNavigation({
@@ -96,8 +101,13 @@ const ReviewMode = () => {
                 currentQuestion={currentQuestion}
                 totalQuestions={questions.length}
                 questionData={currentQuestionData}
+                onStartOver={handleStartOver}
             />
-            <ChatPanel messages={messages} onSendMessage={sendMessage} />
+            <ChatPanel
+                messages={messages}
+                onSendMessage={sendMessage}
+                onClearChat={clearMessages}
+            />
         </div>
     );
 };
