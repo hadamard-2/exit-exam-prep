@@ -227,17 +227,16 @@ export default function FileUpload() {
     {
       "id": 1,
       "question": "Question text here?",
+      "correct_answer": 2,
       "choices": [
         {
           "id": 1,
           "text": "Option A",
-          "correct": false,
           "explanation": "Why this is wrong..."
         },
         {
           "id": 2,
-          "text": "Option B", 
-          "correct": true,
+          "text": "Option B",
           "explanation": "Why this is correct..."
         }
       ]${

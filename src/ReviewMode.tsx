@@ -10,7 +10,7 @@ const ReviewMode = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const { messages, sendMessage, clearMessages } = useChat();
+    const { messages, sendMessage, clearMessages } = useChat({currentQuestion: questions[currentQuestion]});
 
     useEffect(() => {
         try {

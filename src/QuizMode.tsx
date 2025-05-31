@@ -93,10 +93,6 @@ const QuizMode = () => {
 
     return (
         <div className="h-screen overflow-hidden bg-slate-950 text-slate-100 flex items-center justify-center relative">
-            {/* Quiz Mode Indicator */}
-            <div className="absolute top-4 right-6 bg-slate-800 text-sm p-3 rounded shadow text-slate-200 font-semibold z-10">
-                Quiz Mode
-            </div>
             <NavigationButtons
                 onPrevious={quiz.prevQuestion}
                 onNext={quiz.nextQuestion}
