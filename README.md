@@ -53,26 +53,25 @@ A web app for practicing and reviewing multiple-choice questions with instant fe
    JSON File Format
     ```
     {
-    "questions": [
-        {
-        "id": 1,
-        "question": "Question text here?",
-        "choices": [
+        "questions": [
             {
-            "id": 1,
-            "text": "Option A",
-            "correct": false,
-            "explanation": "Why this is wrong..."
-            },
-            {
-            "id": 2,
-            "text": "Option B",
-            "correct": true,
-            "explanation": "Why this is correct..."
+                "id": 1,
+                "question": "Question text here?",
+                "choices": [
+                    {
+                    "id": 1,
+                    "text": "Option A",
+                    "explanation": "Why this is wrong..."
+                    },
+                    {
+                    "id": 2,
+                    "text": "Option B",
+                    "explanation": "Why this is correct..."
+                    }
+                ],
+                "correct_answer": 1,
             }
         ]
-        }
-    ]
     }
     ```
 
