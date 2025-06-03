@@ -1,7 +1,7 @@
 import React from "react";
 import { Check, X } from "lucide-react";
+import Markdown from "react-markdown";
 import type { Question } from "../types/quiz";
-import { MarkdownRenderer } from "./MarkdownRenderer";
 
 interface QuestionCardProps {
     question: Question;
@@ -19,7 +19,27 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     return (
         <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 shadow-2xl">
             <div className="text-[17px] font-semibold text-slate-100 mb-8 leading-relaxed">
-                <MarkdownRenderer text={question.question} />
+                <Markdown
+                    components={{
+                        p: ({ children }) => (
+                            <p className="mb-3 last:mb-0 leading-relaxed">
+                                {children}
+                            </p>
+                        ),
+                        code: ({ children }) => (
+                            <code className="bg-slate-800 mx-1 px-2 py-1 rounded text-sm font-mono text-emerald-300">
+                                {children}
+                            </code>
+                        ),
+                        pre: ({ children }) => (
+                            <pre className="bg-slate-800 p-4 rounded-lg mt-3 mb-3 overflow-x-auto">
+                                {children}
+                            </pre>
+                        ),
+                    }}
+                >
+                    {question.question}
+                </Markdown>
             </div>
 
             <div className="space-y-4">
@@ -65,12 +85,27 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                         {showExplanation && isCorrect && (
                                             <Check className="h-3 w-3 text-white" />
                                         )}
-                                        {showExplanation && isSelected && !isCorrect && (
-                                            <X className="h-3 w-3 text-white" />
-                                        )}
+                                        {showExplanation &&
+                                            isSelected &&
+                                            !isCorrect && (
+                                                <X className="h-3 w-3 text-white" />
+                                            )}
                                     </div>
                                     <span className="font-medium text-sm">
-                                        <MarkdownRenderer text={choice.text} applyMargin={false}/>
+                                        <Markdown
+                                            components={{
+                                                p: ({ children }) => (
+                                                    <span>{children}</span>
+                                                ),
+                                                code: ({ children }) => (
+                                                    <code className="bg-slate-800 mx-1 px-1 py-0.5 rounded text-xs font-mono text-emerald-300">
+                                                        {children}
+                                                    </code>
+                                                ),
+                                            }}
+                                        >
+                                            {choice.text}
+                                        </Markdown>
                                     </span>
                                 </div>
                             </button>
@@ -86,12 +121,34 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                     }`}
                                 >
                                     <div className="text-sm font-medium mb-1">
-                                        {isCorrect ? "Correct!" : isSelected ? "Incorrect" : "Info"}
+                                        {isCorrect
+                                            ? "Correct!"
+                                            : isSelected
+                                            ? "Incorrect"
+                                            : "Info"}
                                     </div>
                                     <div className="text-sm opacity-90">
-                                        <MarkdownRenderer
-                                            text={choice.explanation}
-                                        />
+                                        <Markdown
+                                            components={{
+                                                p: ({ children }) => (
+                                                    <p className="mb-2 last:mb-0 leading-relaxed">
+                                                        {children}
+                                                    </p>
+                                                ),
+                                                code: ({ children }) => (
+                                                    <code className="bg-slate-700 mx-1 px-1 py-0.5 rounded text-xs font-mono text-emerald-300">
+                                                        {children}
+                                                    </code>
+                                                ),
+                                                pre: ({ children }) => (
+                                                    <pre className="bg-slate-700 p-3 rounded-lg mt-2 mb-2 overflow-x-auto">
+                                                        {children}
+                                                    </pre>
+                                                ),
+                                            }}
+                                        >
+                                            {choice.explanation}
+                                        </Markdown>
                                     </div>
                                 </div>
                             )}

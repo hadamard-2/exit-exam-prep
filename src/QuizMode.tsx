@@ -100,7 +100,7 @@ const QuizMode = () => {
                 hasSelectedAnswer={hasSelectedAnswer}
             />
 
-            <div className="max-w-4xl w-full mx-auto px-4 py-10 h-full flex flex-col">
+            <div className="max-w-4xl w-[60%] mx-auto px-4 py-10 h-full flex flex-col">
                 <QuizHeader
                     currentQuestion={quiz.currentQuestion}
                     totalQuestions={questions.length}
