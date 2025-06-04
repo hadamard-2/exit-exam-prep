@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, MessageCircle, Copy, Trash2, Check } from "lucide-react";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface ChatMessage {
     id: string;
@@ -96,77 +97,112 @@ export const ChatPanel = ({
                             {message.sender === "ai" ? (
                                 <div className="prose prose-sm prose-invert max-w-none">
                                     <Markdown
-    components={{
-        p: ({ children }) => (
-            <p className="mb-3 last:mb-0 leading-relaxed">
-                {children}
-            </p>
-        ),
-        code: ({ children }) => (
-            <code className="bg-slate-700 mx-1 px-1 py-0.5 rounded text-xs font-mono">
-                {children}
-            </code>
-        ),
-        pre: ({ children }) => (
-            <pre className="bg-slate-700 p-4 rounded-lg mt-3 mb-3 overflow-x-auto">
-                {children}
-            </pre>
-        ),
-        ul: ({ children }) => (
-            <ul className="ml-6 mb-3 list-disc">
-                {children}
-            </ul>
-        ),
-        ol: ({ children }) => (
-            <ol className="ml-6 mb-3 list-decimal">
-                {children}
-            </ol>
-        ),
-        li: ({ children }) => (
-            <li className="mb-1 leading-relaxed">{children}</li>
-        ),
-        h1: ({ children }) => (
-            <h1 className="text-xl font-bold mb-4 mt-6 first:mt-0 text-slate-100 border-b border-slate-700 pb-2">
-                {children}
-            </h1>
-        ),
-        h2: ({ children }) => (
-            <h2 className="text-lg font-bold mb-3 mt-5 first:mt-0 text-slate-200">
-                {children}
-            </h2>
-        ),
-        h3: ({ children }) => (
-            <h3 className="text-base font-semibold mb-2 mt-4 first:mt-0 text-slate-300">
-                {children}
-            </h3>
-        ),
-        h4: ({ children }) => (
-            <h4 className="text-sm font-semibold mb-2 mt-3 first:mt-0 text-slate-400">
-                {children}
-            </h4>
-        ),
-        blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-blue-500 pl-4 ml-2 my-3 text-slate-300 bg-slate-800/50 py-2 rounded-r">
-                {children}
-            </blockquote>
-        ),
-        strong: ({ children }) => (
-            <strong className="font-semibold text-slate-100">
-                {children}
-            </strong>
-        ),
-        em: ({ children }) => (
-            <em className="italic text-slate-300">
-                {children}
-            </em>
-        ),
-        hr: () => (
-            <hr className="border-slate-600 my-6" />
-        ),
-    }}
->
-    {message.message}
-</Markdown>
+remarkPlugins={[remarkGfm]}
+                                        components={{
+                                            p: ({ children }) => (
+                                                <p className="mb-3 last:mb-0 leading-relaxed">
+                                                    {children}
+                                                </p>
+                                            ),
+                                            code: ({ children }) => (
+                                                <code className="bg-slate-700 mx-1 px-1 py-0.5 rounded text-xs font-mono">
+                                                    {children}
+                                                </code>
+                                            ),
+                                            pre: ({ children }) => (
+                                                <pre className="bg-slate-700 p-4 rounded-lg mt-3 mb-3 overflow-x-auto">
+                                                    {children}
+                                                </pre>
+                                            ),
+                                            ul: ({ children }) => (
+                                                <ul className="ml-6 mb-3 list-disc">
+                                                    {children}
+                                                </ul>
+                                            ),
+                                            ol: ({ children }) => (
+                                                <ol className="ml-6 mb-3 list-decimal">
+                                                    {children}
+                                                </ol>
+                                            ),
+                                            li: ({ children }) => (
+                                                <li className="mb-1 leading-relaxed">
+                                                    {children}
+                                                </li>
+                                            ),
+                                            h1: ({ children }) => (
+                                                <h1 className="text-xl font-bold mb-4 mt-6 first:mt-0 text-slate-100 border-b border-slate-700 pb-2">
+                                                    {children}
+                                                </h1>
+                                            ),
+                                            h2: ({ children }) => (
+                                                <h2 className="text-lg font-bold mb-3 mt-5 first:mt-0 text-slate-200">
+                                                    {children}
+                                                </h2>
+                                            ),
+                                            h3: ({ children }) => (
+                                                <h3 className="text-base font-semibold mb-2 mt-4 first:mt-0 text-slate-300">
+                                                    {children}
+                                                </h3>
+                                            ),
+                                            h4: ({ children }) => (
+                                                <h4 className="text-sm font-semibold mb-2 mt-3 first:mt-0 text-slate-400">
+                                                    {children}
+                                                </h4>
+                                            ),
+                                            blockquote: ({ children }) => (
+                                                <blockquote className="border-l-4 border-blue-500 pl-4 ml-2 my-3 text-slate-300 bg-slate-800/50 py-2 rounded-r">
+                                                    {children}
+                                                </blockquote>
+                                            ),
+                                            strong: ({ children }) => (
+                                                <strong className="font-semibold text-slate-100">
+                                                    {children}
+                                                </strong>
+                                            ),
+                                            em: ({ children }) => (
+                                                <em className="italic text-slate-300">
+                                                    {children}
+                                                </em>
+                                            ),
+                                            hr: () => (
+                                                <hr className="border-slate-600 my-6" />
+                                            ),
+                                            table: ({ children }) => (
+                                                <div className="overflow-x-auto my-4">
+                                                    <table className="min-w-full border-collapse border border-slate-600 text-sm">
+                                                        {children}
+                                                    </table>
+                                                </div>
+                                            ),
+                                            thead: ({ children }) => (
+                                                <thead className="bg-slate-700">
+                                                    {children}
+                                                </thead>
+                                            ),
+                                            tbody: ({ children }) => (
+                                                <tbody className="bg-slate-800/50">
+                                                    {children}
+                                                </tbody>
+                                            ),
+                                            tr: ({ children }) => (
+                                                <tr className="border-b border-slate-600">
+                                                    {children}
+                                                </tr>
+                                            ),
+                                            th: ({ children }) => (
+                                                <th className="border border-slate-600 px-3 py-2 text-left font-semibold text-slate-200">
+                                                    {children}
+                                                </th>
+                                            ),
+                                            td: ({ children }) => (
+                                                <td className="border border-slate-600 px-3 py-2 text-slate-300">
+                                                    {children}
+                                                </td>
+                                            ),
+                                        }}
+                                    >
+                                        {message.message}
+                                    </Markdown>
                                 </div>
                             ) : (
                                 <div className="whitespace-pre-wrap">
