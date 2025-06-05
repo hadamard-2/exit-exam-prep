@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Question, QuizState } from "../types/quiz";
+
+const QUIZ_PROGRESS_KEY = "quizProgress";
 
 export const useQuiz = (questions: Question[]) => {
     const [state, setState] = useState<QuizState>({
@@ -9,6 +11,28 @@ export const useQuiz = (questions: Question[]) => {
         quizCompleted: false,
         score: 0,
     });
+
+    // Load saved progress on mount
+    useEffect(() => {
+        const savedProgress = localStorage.getItem(QUIZ_PROGRESS_KEY);
+        if (savedProgress) {
+            try {
+                const parsedProgress = JSON.parse(savedProgress);
+                setState(parsedProgress);
+            } catch (error) {
+                console.error("Error loading saved progress:", error);
+                // Clear corrupted data
+                localStorage.removeItem(QUIZ_PROGRESS_KEY);
+            }
+        }
+    }, []);
+
+    // Save progress whenever state changes
+    useEffect(() => {
+        if (questions.length > 0) {
+            localStorage.setItem(QUIZ_PROGRESS_KEY, JSON.stringify(state));
+        }
+    }, [state, questions.length]);
 
     const handleAnswerSelect = (questionId: number, choiceIndex: number) => {
         const newSelectedAnswers = {
@@ -52,22 +76,17 @@ export const useQuiz = (questions: Question[]) => {
             };
         });
 
-        // Get original filename from localStorage or use default
         const originalFilename = localStorage.getItem("originalFilename") || "qeu";
         
-        // Create timestamp
         const now = new Date();
         const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
         
-        // Create filename
         const filename = `${originalFilename}-done-${timestamp}.json`;
         
-        // Create the data to save
         const resultData = {
             questions: questionsWithAnswers
         };
 
-        // Create and download the file
         const blob = new Blob([JSON.stringify(resultData, null, 2)], {
             type: 'application/json'
         });
@@ -97,6 +116,8 @@ export const useQuiz = (questions: Question[]) => {
             }));
             // Save results when quiz is completed
             saveQuizResults();
+            // Clear progress when quiz is completed
+            clearProgress();
         }
     };
 
@@ -110,13 +131,20 @@ export const useQuiz = (questions: Question[]) => {
     };
 
     const resetQuiz = () => {
-        setState({
+        const initialState = {
             currentQuestion: 0,
             selectedAnswers: {},
             showExplanations: {},
             quizCompleted: false,
             score: 0,
-        });
+        };
+        setState(initialState);
+        // Clear saved progress
+        clearProgress();
+    };
+
+    const clearProgress = () => {
+        localStorage.removeItem(QUIZ_PROGRESS_KEY);
     };
 
     return {
@@ -125,5 +153,6 @@ export const useQuiz = (questions: Question[]) => {
         nextQuestion,
         prevQuestion,
         resetQuiz,
+        clearProgress,
     };
 };

@@ -5,12 +5,14 @@ import { QuizHeader } from "./components/QuizHeader";
 import { QuestionCard } from "./components/QuestionCard";
 import { QuizResults } from "./components/QuizResults";
 import { NavigationButtons } from "./components/NavigationButtons";
+import { RotateCcw, Play } from "lucide-react";
 import type { Question } from "./types/quiz";
 
 const QuizMode = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [showContinueOption, setShowContinueOption] = useState(false);
 
     useEffect(() => {
         try {
@@ -29,6 +31,21 @@ const QuizMode = () => {
             }
 
             setQuestions(parsedData.questions);
+            
+            // Check if there's saved progress
+            const savedProgress = localStorage.getItem("quizProgress");
+            if (savedProgress) {
+                try {
+                    const progress = JSON.parse(savedProgress);
+                    // Show continue option if there's meaningful progress
+                    if (progress.currentQuestion > 0 || Object.keys(progress.selectedAnswers).length > 0) {
+                        setShowContinueOption(true);
+                    }
+                } catch {
+                    // Clear corrupted progress
+                    localStorage.removeItem("quizProgress");
+                }
+            }
         } catch {
             setError("Error loading quiz data.");
         } finally {
@@ -52,6 +69,15 @@ const QuizMode = () => {
         canGoBack: !isFirstQuestion,
         canGoForward: hasSelectedAnswer,
     });
+
+    const handleStartFresh = () => {
+        quiz.resetQuiz();
+        setShowContinueOption(false);
+    };
+
+    const handleContinue = () => {
+        setShowContinueOption(false);
+    };
 
     if (loading) {
         return (
@@ -77,6 +103,37 @@ const QuizMode = () => {
                     >
                         Go Back
                     </button>
+                </div>
+            </div>
+        );
+    }
+
+    if (showContinueOption) {
+        return (
+            <div className="h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
+                <div className="text-center max-w-md">
+                    <div className="bg-slate-900 border border-slate-700 rounded-xl p-8">
+                        <h2 className="text-2xl font-semibold mb-4">Continue Quiz?</h2>
+                        <p className="text-slate-400 mb-6">
+                            We found your previous quiz progress. Would you like to continue where you left off?
+                        </p>
+                        <div className="flex gap-4 justify-center">
+                            <button
+                                onClick={handleContinue}
+                                className="flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-colors"
+                            >
+                                <Play className="h-4 w-4" />
+                                Continue
+                            </button>
+                            <button
+                                onClick={handleStartFresh}
+                                className="flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors"
+                            >
+                                <RotateCcw className="h-4 w-4" />
+                                Start Fresh
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -124,6 +181,9 @@ const QuizMode = () => {
                 <div className="text-center mt-6 text-slate-400 text-sm">
                     Use arrow keys or side buttons to navigate
                     {!hasSelectedAnswer && " (select an answer first)"}
+                    <div className="mt-1 text-xs text-slate-500">
+                        Progress is automatically saved
+                    </div>
                 </div>
             </div>
         </div>
