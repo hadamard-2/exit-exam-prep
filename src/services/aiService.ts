@@ -3,7 +3,8 @@ const apiKey = import.meta.env.VITE_API_KEY;
 export class AIService {
     private static readonly API_URL =
         "https://openrouter.ai/api/v1/chat/completions";
-    private static readonly MODEL = "deepseek/deepseek-r1-0528:free";
+    // private static readonly MODEL = "deepseek/deepseek-r1-0528:free";
+    private static readonly MODEL = "qwen/qwen3-235b-a22b:free";
     private static readonly ERROR_MESSAGE =
         "Sorry, I'm having trouble responding right now. Please try again.";
 

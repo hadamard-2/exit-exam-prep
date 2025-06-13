@@ -27,5 +27,5 @@ ${currentQuestion.choices
 CORRECT ANSWER: ${correctAnswerText}
 STUDENT'S ANSWER: ${userAnswerText}
 
-Please help the student understand this question, explain concepts, and provide educational guidance. Be encouraging and focus on learning rather than just correctness.`;
+I'm here to help clarify any confusion you have about this specific question. Feel free to ask me anything about the question, answer choices, or why certain options are correct or incorrect. I'll keep my responses focused and to the point to help you understand better.`;
 };

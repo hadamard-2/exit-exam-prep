@@ -97,7 +97,7 @@ export const ChatPanel = ({
                             {message.sender === "ai" ? (
                                 <div className="prose prose-sm prose-invert max-w-none">
                                     <Markdown
-remarkPlugins={[remarkGfm]}
+                                        remarkPlugins={[remarkGfm]}
                                         components={{
                                             p: ({ children }) => (
                                                 <p className="mb-3 last:mb-0 leading-relaxed">
@@ -105,7 +105,7 @@ remarkPlugins={[remarkGfm]}
                                                 </p>
                                             ),
                                             code: ({ children }) => (
-                                                <code className="bg-slate-700 mx-1 px-1 py-0.5 rounded text-xs font-mono">
+                                                <code className="bg-slate-700 py-0.5 rounded text-xs font-mono">
                                                     {children}
                                                 </code>
                                             ),

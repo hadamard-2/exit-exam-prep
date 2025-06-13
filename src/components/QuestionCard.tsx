@@ -27,7 +27,14 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                             </p>
                         ),
                         code: ({ children }) => (
-                            <code className="bg-slate-800 mx-1 px-2 py-1 rounded text-sm font-mono text-emerald-300">
+                            <code
+                                className={`bg-slate-800 py-1 rounded text-sm font-mono text-emerald-300 ${
+                                    typeof children === "string" &&
+                                    !children.includes("\n")
+                                        ? "px-1.5"
+                                        : ""
+                                }`}
+                            >
                                 {children}
                             </code>
                         ),
@@ -98,7 +105,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                                     <span>{children}</span>
                                                 ),
                                                 code: ({ children }) => (
-                                                    <code className="bg-slate-800 mx-1 px-1 py-0.5 rounded text-xs font-mono text-emerald-300">
+                                                    <code className="bg-slate-800 py-0.5 rounded text-xs font-mono text-emerald-300">
                                                         {children}
                                                     </code>
                                                 ),
@@ -136,7 +143,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                                                     </p>
                                                 ),
                                                 code: ({ children }) => (
-                                                    <code className="bg-slate-700 mx-1 px-1 py-0.5 rounded text-xs font-mono text-emerald-300">
+                                                    <code className="bg-slate-700 py-0.5 rounded text-xs font-mono text-emerald-300">
                                                         {children}
                                                     </code>
                                                 ),
