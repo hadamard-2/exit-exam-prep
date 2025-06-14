@@ -10,7 +10,16 @@ const ReviewMode = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const { messages, sendMessage, clearMessages } = useChat({currentQuestion: questions[currentQuestion]});
+    const [showWrongOnly, setShowWrongOnly] = useState(false);
+
+    // Filter questions based on wrong answers
+    const filteredQuestions = showWrongOnly
+        ? questions.filter((q) => q.user_answer !== q.correct_answer)
+        : questions;
+
+    const { messages, sendMessage, clearMessages } = useChat({
+        currentQuestion: filteredQuestions[currentQuestion],
+    });
 
     useEffect(() => {
         try {
@@ -38,9 +47,14 @@ const ReviewMode = () => {
         }
     }, []);
 
-    const currentQuestionData = questions[currentQuestion];
+    // Reset current question when filter changes
+    useEffect(() => {
+        setCurrentQuestion(0);
+    }, [showWrongOnly]);
+
+    const currentQuestionData = filteredQuestions[currentQuestion];
     const isFirstQuestion = currentQuestion === 0;
-    const isLastQuestion = currentQuestion === questions.length - 1;
+    const isLastQuestion = currentQuestion === filteredQuestions.length - 1;
 
     const nextQuestion = () => {
         if (!isLastQuestion) {
@@ -56,6 +70,11 @@ const ReviewMode = () => {
 
     const handleStartOver = () => {
         setCurrentQuestion(0);
+        clearMessages();
+    };
+
+    const handleToggleFilter = () => {
+        setShowWrongOnly(!showWrongOnly);
         clearMessages();
     };
 
@@ -95,13 +114,36 @@ const ReviewMode = () => {
         );
     }
 
+    // Handle case when filter shows no wrong answers
+    if (filteredQuestions.length === 0) {
+        return (
+            <div className="h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
+                <div className="text-center max-w-md">
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-6 mb-6">
+                        <p className="text-green-200">
+                            Great job! You got all questions correct.
+                        </p>
+                    </div>
+                    <button
+                        onClick={() => setShowWrongOnly(false)}
+                        className="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors"
+                    >
+                        Show All Questions
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="h-screen bg-slate-950 text-slate-100 flex">
             <QuestionPanel
                 currentQuestion={currentQuestion}
-                totalQuestions={questions.length}
+                totalQuestions={filteredQuestions.length}
                 questionData={currentQuestionData}
                 onStartOver={handleStartOver}
+                showWrongOnly={showWrongOnly}
+                onToggleFilter={handleToggleFilter}
             />
             <ChatPanel
                 messages={messages}
