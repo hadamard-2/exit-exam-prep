@@ -21,7 +21,7 @@ export const ChatPanel = ({
     onSendMessage,
     onClearChat,
 }: ChatPanelProps) => {
-    const [inputMessage, setInputMessage] = useState("");
+    const [inputMessage, setInputMessage] = useState("What do you advise me so that I don't get this or similar questions wrong in the future?");
     const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
